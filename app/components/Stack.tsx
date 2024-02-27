@@ -12,7 +12,7 @@ export default function Stack(props) {
     const levels = 5;
     const height = 1.0;
     const ground_height = 0.0;
-    const gap = 0.1;
+    const gap = 0.01;
     
     let heightList = [];
 

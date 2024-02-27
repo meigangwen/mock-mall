@@ -15,7 +15,7 @@ export default function Level(props) {
                     transition: {
                         duration: 0.6,
                         delay: index * 0.1,
-                        ...framerMotionConfig,
+                        //...framerMotionConfig,
                     },
                 },
                 1: {
@@ -28,9 +28,9 @@ export default function Level(props) {
                 },
             }}
         >
-            <mesh>
+            <mesh castShadow>
                 <boxGeometry args={[6.0,1.0,6.0]} />
-                <meshStandardMaterial envMapIntensity={0.5}/>
+                <meshStandardMaterial envMapIntensity={0.25}/>
             </mesh>
         </motion.group>
     )
