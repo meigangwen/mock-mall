@@ -4,11 +4,13 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Environment} from "@react-three/drei";
 import { useEffect, useState } from 'react'
+import { useFrame, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import { MotionConfig } from "framer-motion";
+import { animate, useMotionValue } from "framer-motion";
 
 // import config
-import { framerMotionConfig } from "../config";
+import { framerMotionConfig } from "../motionConfig";
 
 // import components
 import Mall from "./Mall";
@@ -18,6 +20,7 @@ import useMallStore from '../state/mallStore';
 
 export default function App() {
     
+
     //declare the UI parameters
     const { expanded, level } = useControls("Controls", {
         expanded: false,
@@ -27,7 +30,23 @@ export default function App() {
         },
     });
 
-    const { setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
+    const { mode, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
+
+    /*
+    const { viewport } = useThree();
+    const cameraPositionX = useMotionValue();
+    const cameraLookAtX = useMotionValue();
+    
+    useEffect(() => {
+        animate(cameraPositionX, mode ? -5 : 0, {
+          ...framerMotionConfig,
+        });
+        animate(cameraLookAtX, mode ? 5 : 0, {
+          ...framerMotionConfig,
+        });
+    }, [mode]);
+    */
+
     useEffect(()=>{
         if (expanded) {
             if (level === "None"){
@@ -42,12 +61,12 @@ export default function App() {
             setMode(0);
         }
         updateComputedHeights();
-    }, [expanded, level, setMode, updateComputedHeights])
+    }, [expanded, level, setMode, updateComputedHeights, setFocusedLevel])
 
     return (
         <>
             <MotionConfig transition={{...framerMotionConfig}}>
-                <Canvas shadows camera={{ position: [3, 20, 20], fov: 40 }}>
+                <Canvas shadows camera={{ position: [0, 10, 30], fov: 40 }}>
                     <color attach="background" args={["#000000"]} />
                     <Mall />
                     
@@ -66,8 +85,6 @@ export default function App() {
                         shadow-camera-top={100}
                         shadow-camera-bottom={-100}
                     />
-                    <OrbitControls />
-                    
                     <Environment preset="city" />
                 </Canvas>
             </MotionConfig>

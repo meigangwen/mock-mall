@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
-type mallStore = {
-    
+type cameraStore = {
     // 0 collaped, 1 expanded, 2 focused on a single level
     mode: number;       
     levels: number;
@@ -16,7 +15,7 @@ type mallStore = {
     updateComputedHeights: () => void; 
 };
 
-const useMallStore = create<mallStore>((set) => ({
+const useCameraStore = create<cameraStore>((set) => ({
     mode: 0,
     levels: 5,
     levelHeight: 1.0,
@@ -32,4 +31,4 @@ const useMallStore = create<mallStore>((set) => ({
     })),
 }));
 
-export default useMallStore;
+export default useCameraStore;

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion-3d";
-import { framerMotionConfig } from "../config";
+import { framerMotionConfig } from "../motionConfig";
 import { useEffect, useState } from 'react'
-//import { animate, useMotionValue } from "framer-motion";
+import { animate, useMotionValue } from "framer-motion";
 
 import useMallStore from '../state/mallStore';
 
@@ -38,7 +38,7 @@ export default function Level(props) {
                     },
                 },
                 2: {
-                    scale: focusedLevel===index+1? 1: 0,
+                    //scale: focusedLevel===index+1? 1: 0,
                     y: position[1] + expandDistance * index,
                     transition: {
                         duration: 1.0,
