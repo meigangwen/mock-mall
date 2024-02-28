@@ -1,6 +1,7 @@
 import { motion } from "framer-motion-3d";
 import { framerMotionConfig } from "../motionConfig";
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 
 import useMallStore from '../state/mallStore';
@@ -18,20 +19,24 @@ export default function Level(props) {
     // declare private state
     const [hovered, setHovered] = useState(false)
 
+    const matRef = useRef();
     useEffect(() => {
         let value = 1.0;
         if (mode===2){
-            if (focusedLevel === index - 1) {
-                value = 0.0
-            } else {value = 1.0
+            if ((focusedLevel - 1) === index) {
+                value = 1.0
+            } else {value = 0.0
             }
         }
         animate(opacity, value , {
-            duration:1.0,
+            duration:0.6,
         });
     }, [mode, focusedLevel, index, opacity])
 
-    
+    useFrame((state) => {
+       matRef.current.opacity = opacity.get();
+    });
+
     return (
         <motion.group 
             position = {position}
@@ -53,7 +58,9 @@ export default function Level(props) {
                     },
                 },
                 2: {
-                    y: position[1] + expandDistance * index,
+                    scaleX: 2.5,
+                    scaleZ: 2.5,
+                    y: index === (focusedLevel - 1) ? 1.0 : position[1] + expandDistance * index + (index - (focusedLevel - 1)) * 10.0,
                     transition: {
                         duration: 1.0,
                         ...framerMotionConfig,
@@ -78,11 +85,12 @@ export default function Level(props) {
             >
                 <boxGeometry args={[6.0,1.0,6.0]} />
                 <meshStandardMaterial
+                    ref={matRef}
                     color={hovered? 'red': 'white' } 
                     roughness={1.0} 
                     envMapIntensity={0.25} 
                     transparent
-                    opacity={opacity.get()}
+                    opacity={1.0}
                 />
             </mesh>
         </motion.group>
