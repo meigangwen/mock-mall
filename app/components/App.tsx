@@ -19,19 +19,30 @@ import useMallStore from '../state/mallStore';
 export default function App() {
     
     //declare the UI parameters
-    const { expanded } = useControls("Controls", {
+    const { expanded, level } = useControls("Controls", {
         expanded: false,
+        level: {
+            value: "None",
+            options: ["None","Level 1", "Level 2", "Level 3", "Level 4", "Level 5"], 
+        },
     });
-    const { expand, collapse, updateComputedHeights} = useMallStore();
 
+    const { setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
     useEffect(()=>{
         if (expanded) {
-            expand();
+            if (level === "None"){
+                setMode(1);
+            } else {
+                setMode(2);
+                const focusedLevel = parseInt(level.match(/\d+/), 10);
+                setFocusedLevel(focusedLevel);
+                //console.log(focusedLevel);
+            }
         } else {
-            collapse();
+            setMode(0);
         }
         updateComputedHeights();
-    }, [expanded, expand, collapse, updateComputedHeights])
+    }, [expanded, level, setMode, updateComputedHeights])
 
     return (
         <>
