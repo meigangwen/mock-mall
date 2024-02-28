@@ -2,8 +2,15 @@ import { motion } from "framer-motion-3d";
 import { framerMotionConfig } from "../config";
 //import { animate, useMotionValue } from "framer-motion";
 
+import useMallStore from '../state/mallStore';
+
 export default function Level(props) {
-    const {position, index, distance, section, levels} = props;
+
+    // get props
+    const {position, index, section } = props;
+
+    // get store values
+    const {levels, expandDistance} = useMallStore();
     
     return (
         <motion.group 
@@ -15,11 +22,10 @@ export default function Level(props) {
                     transition: {
                         duration: 0.6,
                         delay: index * 0.1,
-                        //...framerMotionConfig,
                     },
                 },
                 1: {
-                    y: position[1] + distance * index,
+                    y: position[1] + expandDistance * index,
                     transition: {
                         duration: 0.6,
                         delay: (levels - index) * 0.1,

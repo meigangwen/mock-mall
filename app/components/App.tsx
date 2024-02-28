@@ -11,8 +11,10 @@ import { MotionConfig } from "framer-motion";
 import { framerMotionConfig } from "../config";
 
 // import components
-import Stack from "./Stack";
-import Ground from "./Ground";
+import Mall from "./Mall";
+
+// import state
+import useMallStore from '../state/mallStore';
 
 export default function App() {
     
@@ -20,14 +22,23 @@ export default function App() {
     const { expanded } = useControls("Controls", {
         expanded: false,
     });
+    const { expand, collapse, updateComputedHeights} = useMallStore();
+
+    useEffect(()=>{
+        if (expanded) {
+            expand();
+        } else {
+            collapse();
+        }
+        updateComputedHeights();
+    }, [expanded, expand, collapse, updateComputedHeights])
 
     return (
         <>
             <MotionConfig transition={{...framerMotionConfig}}>
                 <Canvas shadows camera={{ position: [3, 20, 20], fov: 40 }}>
                     <color attach="background" args={["#000000"]} />
-                    <Stack expanded={expanded} />
-                    
+                    <Mall />
                     
                     <ambientLight intensity={0.1} />
                     <directionalLight
