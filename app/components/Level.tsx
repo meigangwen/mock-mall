@@ -12,10 +12,25 @@ export default function Level(props) {
 
     // get store values
     const {levels, mode, expandDistance, focusedLevel} = useMallStore();
+    const opacity = useMotionValue(1.0);
     const anim = mode;
 
     // declare private state
     const [hovered, setHovered] = useState(false)
+
+    useEffect(() => {
+        let value = 1.0;
+        if (mode===2){
+            if (focusedLevel === index - 1) {
+                value = 0.0
+            } else {value = 1.0
+            }
+        }
+        animate(opacity, value , {
+            duration:1.0,
+        });
+    }, [mode, focusedLevel, index, opacity])
+
     
     return (
         <motion.group 
@@ -38,11 +53,9 @@ export default function Level(props) {
                     },
                 },
                 2: {
-                    //scale: focusedLevel===index+1? 1: 0,
                     y: position[1] + expandDistance * index,
                     transition: {
                         duration: 1.0,
-                        //delay: (levels - index) * 0.1,
                         ...framerMotionConfig,
                     },
                 },
@@ -68,8 +81,8 @@ export default function Level(props) {
                     color={hovered? 'red': 'white' } 
                     roughness={1.0} 
                     envMapIntensity={0.25} 
-                    //transparent
-                    //opacity={1.0}
+                    transparent
+                    opacity={opacity.get()}
                 />
             </mesh>
         </motion.group>

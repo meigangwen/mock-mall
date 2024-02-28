@@ -2,39 +2,53 @@ import { useEffect, useState } from 'react'
 import Level from './Level'
 import { motion } from "framer-motion-3d";
 
-import useMallStore from '../state/mallStore';
 import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 
 // import config
 import { framerMotionConfig } from "../motionConfig";
 
-export default function Mall() {
+// import states
+import useMallStore from '../state/mallStore';
+import useCameraStore from '../state/cameraStore';
+
+export default function Mall(props) {
 
     const { mode, computedHeights } = useMallStore();
+    const { cameraPosition, cameraLookAt } = useCameraStore();
 
-    //animate the camera based on the mode
-    const cameraPositionX = useMotionValue(0);
-    const cameraLookAtX = useMotionValue(0);
+    //animate the camera based on the mall mode
+    //let position = cameraPosition[mode];
+    //let lookAt = cameraLookAt[mode];
+
+    const cameraPositionY = useMotionValue(0);
+    const cameraLookAtY = useMotionValue(0);
+    const cameraPositionZ = useMotionValue(0);
+    const cameraLookAtZ = useMotionValue(0);
 
     useEffect(() => {
-        animate(cameraPositionX, mode ? -5 : 0, {
-          duration:2.0,
-          //...framerMotionConfig,
+        animate(cameraPositionY, cameraPosition[mode].y, {
+            duration:1.0,
         });
-        animate(cameraLookAtX, mode ? 5 : 0, {
-          duration:2.0,
-          //...framerMotionConfig,
+        animate(cameraLookAtY, cameraLookAt[mode].y, {
+            duration:1.0,
         });
-    }, [mode,cameraPositionX,cameraLookAtX]);
+        animate(cameraPositionZ, cameraPosition[mode].z, {
+            duration:1.0,
+        });
+        animate(cameraLookAtZ, cameraLookAt[mode].z, {
+            duration:1.0,
+        });
+    }, [mode,cameraPositionY,cameraLookAtY, cameraPositionZ, cameraLookAtZ, cameraPosition, cameraLookAt]);
 
     useFrame((state) => {
-        state.camera.position.x = cameraPositionX.get();
-        state.camera.lookAt(cameraLookAtX.get(), 0, 0);
+        state.camera.position.y = cameraPositionY.get();
+        state.camera.position.z = cameraPositionZ.get();
+        state.camera.lookAt(0, cameraLookAtY.get(), cameraLookAtZ.get());
     });
     
     return (
-        <motion.group>
+        <motion.group {...props}>
             {
                 computedHeights.map((height, index) => ( 
                     <Level 

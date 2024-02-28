@@ -32,21 +32,6 @@ export default function App() {
 
     const { mode, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
 
-    /*
-    const { viewport } = useThree();
-    const cameraPositionX = useMotionValue();
-    const cameraLookAtX = useMotionValue();
-    
-    useEffect(() => {
-        animate(cameraPositionX, mode ? -5 : 0, {
-          ...framerMotionConfig,
-        });
-        animate(cameraLookAtX, mode ? 5 : 0, {
-          ...framerMotionConfig,
-        });
-    }, [mode]);
-    */
-
     useEffect(()=>{
         if (expanded) {
             if (level === "None"){
@@ -55,7 +40,6 @@ export default function App() {
                 setMode(2);
                 const focusedLevel = parseInt(level.match(/\d+/), 10);
                 setFocusedLevel(focusedLevel);
-                //console.log(focusedLevel);
             }
         } else {
             setMode(0);
@@ -68,7 +52,7 @@ export default function App() {
             <MotionConfig transition={{...framerMotionConfig}}>
                 <Canvas shadows camera={{ position: [0, 10, 30], fov: 40 }}>
                     <color attach="background" args={["#000000"]} />
-                    <Mall />
+                    <Mall rotation-y={Math.PI / 4} />
                     
                     <ambientLight intensity={0.1} />
                     <directionalLight
