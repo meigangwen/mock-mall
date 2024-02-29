@@ -45,14 +45,14 @@ export default function Level(props) {
                 0: {
                     y: position[1],
                     transition: {
-                        duration: 0.6,
+                        duration: 1,
                         delay: index * 0.1,
                     },
                 },
                 1: {
                     y: position[1] + expandDistance * index,
                     transition: {
-                        duration: 0.6,
+                        duration: 1,
                         delay: (levels - index) * 0.1,
                         ...framerMotionConfig,
                     },
@@ -62,7 +62,7 @@ export default function Level(props) {
                     scaleZ: 2.5,
                     y: index === (focusedLevel - 1) ? 1.0 : position[1] + expandDistance * index + (index - (focusedLevel - 1)) * 10.0,
                     transition: {
-                        duration: 1.0,
+                        duration: 2,
                         ...framerMotionConfig,
                     },
                 },

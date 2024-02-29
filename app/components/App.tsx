@@ -2,7 +2,7 @@
 
 // import modules
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Sky, Environment} from "@react-three/drei";
+import { Sky, Environment} from "@react-three/drei";
 import { useEffect, useState } from 'react'
 import { useFrame, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
@@ -14,6 +14,7 @@ import { framerMotionConfig } from "../motionConfig";
 
 // import components
 import Mall from "./Mall";
+import CameraControls from './CameraControls';
 
 // import state
 import useMallStore from '../state/mallStore';
@@ -53,7 +54,7 @@ export default function App() {
                 <Canvas shadows camera={{ position: [0, 10, 30], fov: 40 }}>
                     <color attach="background" args={["#000000"]} />
                     <Mall rotation-y={Math.PI / 4} />
-                    
+
                     <ambientLight intensity={0.1} />
                     <directionalLight
                         visible
@@ -70,7 +71,9 @@ export default function App() {
                         shadow-camera-bottom={-100}
                     />
                     <Environment preset="city" />
+                    <CameraControls />
                 </Canvas>
+                
             </MotionConfig>
         </>
     )
