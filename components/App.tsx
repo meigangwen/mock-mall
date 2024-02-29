@@ -10,7 +10,7 @@ import { MotionConfig } from "framer-motion";
 //import { animate, useMotionValue } from "framer-motion";
 
 // import config
-import { framerMotionConfig } from "../motionConfig";
+import { framerMotionConfig } from "@/app/motionConfig";
 
 // import components
 import Mall from "./Mall";

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion-3d";
-import { framerMotionConfig } from "../motionConfig";
+import { framerMotionConfig } from "@/app/motionConfig";
 import { useEffect, useState, useRef } from 'react'
 import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
