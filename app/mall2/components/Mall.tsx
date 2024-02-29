@@ -5,7 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 
 // import config
-import { framerMotionConfig } from "../motionConfig";
+import { framerMotionConfig } from "@/app/motionConfig";
 
 // import states
 import useMallStore from '../state/mallStore';
