@@ -3,13 +3,16 @@ import { framerMotionConfig } from "../motionConfig";
 import { useEffect, useState, useRef } from 'react'
 import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
+import { useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 import useMallStore from '../state/mallStore';
+import * as THREE from 'three';
 
 export default function Level(props) {
 
     // get props
-    const {position, index} = props;
+    const {position, index, name} = props;
 
     // get store values
     const {levels, mode, expandDistance, focusedLevel} = useMallStore();
@@ -18,8 +21,24 @@ export default function Level(props) {
 
     // declare private state
     const [hovered, setHovered] = useState(false)
-
     const matRef = useRef();
+
+    // load the level model
+    const gltf = useLoader(GLTFLoader, "/model/"+ name + ".glb");
+    let geometry = new THREE.BufferGeometry();
+
+    gltf.scene.traverse(function (child) {
+        if (child.isMesh) {
+          //if there is not vertex normals, compute it
+          if (!child.geometry.attributes.normal) {
+            child.geometry.computeVertexNormals();
+          }
+    
+          geometry = child.geometry;
+          //material = child.material;
+        }
+    });
+
     useEffect(() => {
         let value = 1.0;
         if (mode===2){
@@ -58,8 +77,8 @@ export default function Level(props) {
                     },
                 },
                 2: {
-                    scaleX: 2.5,
-                    scaleZ: 2.5,
+                    scaleX: 2,
+                    scaleZ: 2,
                     y: index === (focusedLevel - 1) ? 1.0 : position[1] + expandDistance * index + (index - (focusedLevel - 1)) * 10.0,
                     transition: {
                         duration: 2,
@@ -82,8 +101,8 @@ export default function Level(props) {
                         setHovered(false)
                     }
                 }}
+                geometry={geometry}
             >
-                <boxGeometry args={[6.0,1.0,6.0]} />
                 <meshStandardMaterial
                     ref={matRef}
                     color={hovered? 'red': 'white' } 
@@ -91,8 +110,10 @@ export default function Level(props) {
                     envMapIntensity={0.25} 
                     transparent
                     opacity={1.0}
+                    flatShading
                 />
             </mesh>
         </motion.group>
     )
 }
+// <boxGeometry args={[10.0,1.0,10.0]} />

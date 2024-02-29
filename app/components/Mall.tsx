@@ -13,14 +13,15 @@ import useMallStore from '../state/mallStore';
 
 export default function Mall(props) {
 
-    const { computedHeights } = useMallStore();
+    const { computedHeights, levelNames } = useMallStore();
 
     return (
         <motion.group {...props}>
             {
                 computedHeights.map((height, index) => ( 
                     <Level 
-                        key={index} 
+                        key={index}
+                        name = {levelNames[index]} 
                         index={index} 
                         position={[0, height, 0]} 
                     />

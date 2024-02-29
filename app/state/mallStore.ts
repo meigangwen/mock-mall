@@ -10,6 +10,7 @@ type mallStore = {
     expandDistance: number;
     computedHeights: number[];
     focusedLevel: number;
+    levelNames: String[];
     
     setMode: (mode: number) => void;
     setFocusedLevel: (level: number) => void;
@@ -24,6 +25,7 @@ const useMallStore = create<mallStore>((set) => ({
     expandDistance: 2.0,
     computedHeights: [],
     focusedLevel: -1,
+    levelNames: ['B1', 'L1', 'L2', 'L3', 'L4'],
 
     setMode: (mode) => set((state) => ({ mode: mode })),
     setFocusedLevel: (level) => set((state) => ({ focusedLevel: level })),

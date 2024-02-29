@@ -71,7 +71,7 @@ export default function CameraControls() {
                 ref = { orbitRef }
                 target = {lookAtTargetPosition}
                 enabled = {!isAnimating}
-                minDistance = {5.0}
+                minDistance = {8.0}
                 maxDistance = {100.0}
                 minPolarAngle = {0}
                 maxPolarAngle = {Math.PI * 0.5}

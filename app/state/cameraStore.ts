@@ -15,7 +15,7 @@ const useCameraStore = create<cameraStore>((set) => ({
     //animate: false,
     isAnimating: false,
     duration: 1.0,
-    cameraPositionArray: [new THREE.Vector3(0,10,15), new THREE.Vector3(0,15,25), new THREE.Vector3(0,7.5,20)],
+    cameraPositionArray: [new THREE.Vector3(0,10,18), new THREE.Vector3(0,15,28), new THREE.Vector3(0,7.5,25)],
     cameraLookAtArray: [new THREE.Vector3(0,2,0), new THREE.Vector3(0,6,0), new THREE.Vector3(0,1.0,0)],
 
     setIsAnimating: (isAnimating) => set((state) => ({ isAnimating: isAnimating })),
