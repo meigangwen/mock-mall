@@ -25,7 +25,7 @@ export default function CameraControls() {
     const cameraLookAtY = useMotionValue(0);
     const cameraLookAtZ = useMotionValue(0);
 
-    useEffect(() => {
+    useEffect(() => { 
         // update the camera position
         cameraPositionX.set(camera.position.x);
         cameraPositionY.set(camera.position.y);
@@ -43,6 +43,9 @@ export default function CameraControls() {
          
     },[mode, focusedLevel]);
 
+
+     // ref to the orbit control
+     const orbitRef = useRef();
     // animate the camera
     useFrame((state) => {
         if  (    cameraPositionY.isAnimating() 
@@ -55,6 +58,7 @@ export default function CameraControls() {
         {
             state.camera.position.set(cameraPositionX.get(),cameraPositionY.get(), cameraPositionZ.get());
             state.camera.lookAt(cameraLookAtX.get(), cameraLookAtY.get(), cameraLookAtZ.get());
+            orbitRef.current.target = new THREE.Vector3(cameraLookAtX.get(), cameraLookAtY.get(), cameraLookAtZ.get());
             setIsAnimating(true);
         } else {
             setIsAnimating(false);
@@ -64,8 +68,13 @@ export default function CameraControls() {
     return (
         <>
             <OrbitControls
+                ref = { orbitRef }
                 target = {lookAtTargetPosition}
-                enabled = {!isAnimating} 
+                enabled = {!isAnimating}
+                minDistance = {5.0}
+                maxDistance = {100.0}
+                minPolarAngle = {0}
+                maxPolarAngle = {Math.PI * 0.5}
             />
         </>
     )

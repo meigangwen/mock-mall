@@ -4,16 +4,17 @@
 import { Canvas } from '@react-three/fiber'
 import { Sky, Environment} from "@react-three/drei";
 import { useEffect, useState } from 'react'
-import { useFrame, useThree } from "@react-three/fiber";
+//import { useFrame, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import { MotionConfig } from "framer-motion";
-import { animate, useMotionValue } from "framer-motion";
+//import { animate, useMotionValue } from "framer-motion";
 
 // import config
 import { framerMotionConfig } from "../motionConfig";
 
 // import components
 import Mall from "./Mall";
+import Background from "./Background";
 import CameraControls from './CameraControls';
 
 // import state
@@ -70,6 +71,7 @@ export default function App() {
                         shadow-camera-top={100}
                         shadow-camera-bottom={-100}
                     />
+                    
                     <Environment preset="city" />
                     <CameraControls />
                 </Canvas>
@@ -78,3 +80,5 @@ export default function App() {
         </>
     )
 }
+
+//<Environment preset="city" />
