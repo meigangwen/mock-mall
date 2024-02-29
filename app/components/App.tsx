@@ -24,11 +24,12 @@ export default function App() {
     
 
     //declare the UI parameters
+    const options = ["None","Basement 1", "Level 1", "Level 2", "Level 3", "Level 4"];
     const { expanded, level } = useControls("Controls", {
         expanded: false,
         level: {
             value: "None",
-            options: ["None","Level 1", "Level 2", "Level 3", "Level 4", "Level 5"], 
+            options: options, 
         },
     });
 
@@ -40,7 +41,8 @@ export default function App() {
                 setMode(1);
             } else {
                 setMode(2);
-                const focusedLevel = parseInt(level.match(/\d+/), 10);
+                // this is not reliable now
+                const focusedLevel = options.indexOf(level);
                 setFocusedLevel(focusedLevel);
             }
         } else {
