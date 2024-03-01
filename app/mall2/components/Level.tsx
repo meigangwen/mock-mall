@@ -5,7 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-
+import { Html } from "@react-three/drei";
 import useMallStore from '../state/mallStore';
 import * as THREE from 'three';
 
@@ -113,6 +113,17 @@ export default function Level(props) {
                     flatShading
                 />
             </mesh>
+
+            {
+            mode === 1 && (<Html 
+                position={[5.1, 0, 5.1]} 
+                distanceFactor={25.0}
+            >
+                <div className="annotation">
+                    <h1>{name}</h1>
+                </div>
+            </Html>)
+            }
         </motion.group>
     )
 }
