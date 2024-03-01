@@ -12,6 +12,26 @@ export function Model(props) {
     <group {...props} dispose={null}>
       <mesh geometry={nodes.wall_1.geometry} material={nodes.wall_1.material} />
       <mesh geometry={nodes.rail_1.geometry} material={nodes.rail_1.material} />
+      <mesh geometry={nodes.shop_1_instance_0.geometry} material={nodes.shop_1_instance_0.material} position={[-4.4, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_1.geometry} material={nodes.shop_1_instance_1.material} position={[-3.422, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_2.geometry} material={nodes.shop_1_instance_2.material} position={[-2.444, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_3.geometry} material={nodes.shop_1_instance_3.material} position={[-1.467, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_4.geometry} material={nodes.shop_1_instance_4.material} position={[-0.489, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_5.geometry} material={nodes.shop_1_instance_5.material} position={[0.489, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_6.geometry} material={nodes.shop_1_instance_6.material} position={[1.467, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_7.geometry} material={nodes.shop_1_instance_7.material} position={[2.444, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_8.geometry} material={nodes.shop_1_instance_8.material} position={[3.422, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_9.geometry} material={nodes.shop_1_instance_9.material} position={[4.4, 0.1, -4.4]} />
+      <mesh geometry={nodes.shop_1_instance_10.geometry} material={nodes.shop_1_instance_10.material} position={[-4.4, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_11.geometry} material={nodes.shop_1_instance_11.material} position={[-3.422, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_12.geometry} material={nodes.shop_1_instance_12.material} position={[-2.444, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_13.geometry} material={nodes.shop_1_instance_13.material} position={[-1.467, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_14.geometry} material={nodes.shop_1_instance_14.material} position={[-0.489, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_15.geometry} material={nodes.shop_1_instance_15.material} position={[0.489, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_16.geometry} material={nodes.shop_1_instance_16.material} position={[1.467, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_17.geometry} material={nodes.shop_1_instance_17.material} position={[2.444, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_18.geometry} material={nodes.shop_1_instance_18.material} position={[3.422, 0.1, 4.4]} />
+      <mesh geometry={nodes.shop_1_instance_19.geometry} material={nodes.shop_1_instance_19.material} position={[4.4, 0.1, 4.4]} />
     </group>
   )
 }
