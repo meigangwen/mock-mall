@@ -16,12 +16,12 @@ import { framerMotionConfig } from "../motionConfig";
 import Mall from "./Mall";
 import Background from "./Background";
 import CameraControls from './CameraControls';
+import TweenCam from './TweenCam';
 
 // import state
 import useMallStore from '../state/mallStore';
 
 export default function App() {
-    
 
     //declare the UI parameters
     const options = ["None","Basement 1", "Level 1", "Level 2", "Level 3", "Level 4"];
@@ -73,9 +73,9 @@ export default function App() {
                         shadow-camera-top={100}
                         shadow-camera-bottom={-100}
                     />
-                    
+
+                    <TweenCam />
                     <Environment preset="city" />
-                    <CameraControls />
                 </Canvas>
                 
             </MotionConfig>
