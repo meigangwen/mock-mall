@@ -15,10 +15,14 @@ import { framerMotionConfig } from "../motionConfig";
 // import components
 import Mall from "./Mall";
 import Background from "./Background";
-import CameraControls from './CameraControls';
+import CamControls from './CamControls';
+
 
 // import state
 import useMallStore from '../state/mallStore';
+import useCamStore from '../state/camStore';
+
+import * as THREE from 'three';
 
 export default function App() {
     
@@ -34,6 +38,7 @@ export default function App() {
     });
 
     const { mode, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
+    const { setCamPosition } = useCamStore();
 
     useEffect(()=>{
         if (expanded) {
@@ -45,8 +50,10 @@ export default function App() {
                 const focusedLevel = options.indexOf(level);
                 setFocusedLevel(focusedLevel);
             }
+            setCamPosition(new THREE.Vector3(10,10,10));
         } else {
             setMode(0);
+            setCamPosition(new THREE.Vector3(0,0,0));
         }
         updateComputedHeights();
     }, [expanded, level, setMode, updateComputedHeights, setFocusedLevel])
@@ -75,7 +82,7 @@ export default function App() {
                     />
                     
                     <Environment preset="city" />
-                    <CameraControls />
+                    <CamControls />
                 </Canvas>
                 
             </MotionConfig>
