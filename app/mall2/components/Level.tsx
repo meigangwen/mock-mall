@@ -107,6 +107,8 @@ export default function Level(props) {
                 castShadow
                 receiveShadow
                 geometry={wall_geometris[0]}
+
+                /*
                 onPointerOver={(e) => {
                     if (mode === 1){ 
                         setHovered(true)
@@ -119,7 +121,7 @@ export default function Level(props) {
                     }
                 }}
 
-                /*
+                
                 onPointerUp={(e) => {
                     //setCamera(new THREE.Vector3(0.0,6.0,0.0), new THREE.Vector3(position.x *2 , 1.0 ,position.z * 2));
                     setMode(2);

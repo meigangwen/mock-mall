@@ -12,11 +12,13 @@ type mallStore = {
     focusedLevel: number;
     focusedShop: number;
     levelNames: String[];
+    category: String;
     
     setMode: (mode: number) => void;
     setFocusedLevel: (level: number) => void;
     setFocusedShop: (shop: number) => void;
-    updateComputedHeights: () => void; 
+    updateComputedHeights: () => void;
+    setCategory: (category: String) => void; 
 };
 
 const useMallStore = create<mallStore>((set) => ({
@@ -29,6 +31,7 @@ const useMallStore = create<mallStore>((set) => ({
     focusedLevel: -1,
     focusedShop: -1,
     levelNames: ['B1', 'L1', 'L2', 'L3', 'L4'],
+    category:'none',
 
     setMode: (mode) => set((state) => ({ mode: mode })),
     setFocusedLevel: (level) => set((state) => ({ focusedLevel: level })),
@@ -36,6 +39,7 @@ const useMallStore = create<mallStore>((set) => ({
     updateComputedHeights: () => set((state) => ({ 
         computedHeights: Array.from({ length: state.levels }, (_, i) => state.levelHeight * 0.5 + (state.levelHeight + state.levelGap) * i)
     })),
+    setCategory: (category) => set((state) => ({ category: category })),
 }));
 
 export default useMallStore;

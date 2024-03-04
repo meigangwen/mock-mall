@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 
 export default function Directory(props) {
 
-    const {focusedLevel, levelNames, focusedShop} = useMallStore();
+    const {category, focusedLevel, levelNames, focusedShop} = useMallStore();
     const directory = [
         [],
         [
@@ -103,7 +103,7 @@ export default function Directory(props) {
             <br></br>
             {
                 shops.map((shop, index)=> (
-                    <div className={focusedShop===index?"text-red-600 text-xl":"text-white text-xl"} key={index}> {shop['number']} {shop['name']}</div>
+                    <div className={ (focusedShop===index) || (category === shop['category']) ?"text-red-600 text-xl":"text-white text-xl"} key={index}> {shop['number']} {shop['name']}</div>
                 ))
             }
         </div>

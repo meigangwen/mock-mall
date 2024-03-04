@@ -23,18 +23,18 @@ import useCamStore from '../state/camStore';
 export default function App() {
     
     //get the mall info
-    const { mode, levelNames, focusedLevel, setMode, setFocusedLevel ,updateComputedHeights, setFocusedShop} = useMallStore();
+    const { mode, category, levelNames, focusedLevel, setMode, setFocusedLevel ,updateComputedHeights, setFocusedShop, setCategory} = useMallStore();
     const { camStartPosition, positionArray, targetArray, setCamera, setNeedsUpdate } = useCamStore();
 
     //declare the UI parameters
     const options = ["None", ...levelNames];
-    const { expanded, level } = useControls("Controls", {
+    const { expanded, level, ui_category } = useControls("Controls", {
         expanded: false,
         level: {
             value: "None",
             options: options, 
         },
-        category: {
+        ui_category: {
             value: "None",
             options: ['f&b', 'fasion', 'pet', 'home', 'kids', 'book'],
         }
@@ -58,7 +58,11 @@ export default function App() {
             setCamera(positionArray[0], targetArray[0]);
         }
         updateComputedHeights();
-    }, [expanded, level, focusedLevel])
+    }, [expanded, level, focusedLevel]);
+
+    useEffect(() => {
+        setCategory(ui_category);
+    },[ui_category]);
 
     return (
         <>
