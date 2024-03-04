@@ -6,7 +6,7 @@ import * as THREE from "three";
 export default function Shop(props) {
     const { geometry, index, position, visible } = props;
     const textX = index >= 9 ? 8 : 12;
-    const { mode } = useMallStore();
+    const { mode, focusedShop, setFocusedShop } = useMallStore();
     const { setCamera } = useCamStore();
 
     return (
@@ -30,6 +30,7 @@ export default function Shop(props) {
                     fill="rgba(0,0,0,.66)"
                     onPointerUp={() => {
                         setCamera(new THREE.Vector3(0.0,6.0,0.0), new THREE.Vector3(position.x *2 , 1.0 ,position.z * 2));
+                        setFocusedShop(index);
                     }}
                 />
                 <text
@@ -44,6 +45,23 @@ export default function Shop(props) {
                 </text>
             </svg>
         </Html>
+        }
+        { (index === focusedShop) && visible && (
+            <mesh 
+                geometry={geometry}
+                position = {position}
+                >
+                    <meshStandardMaterial
+                        color='red' 
+                        roughness={1.0} 
+                        envMapIntensity={0.25} 
+                        transparent
+                        opacity={0.5}
+                        //side={THREE.DoubleSide}
+                        flatShading
+                    />
+            </mesh>
+        )
         }
     </group>
     )

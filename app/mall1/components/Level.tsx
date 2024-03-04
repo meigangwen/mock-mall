@@ -89,7 +89,9 @@ export default function Level(props) {
         >
             <mesh 
                 castShadow
+                
                 //receiveShadow
+                /*
                 onPointerOver={(e) => {
                     if (mode === 1){ 
                         setHovered(true)
@@ -101,6 +103,8 @@ export default function Level(props) {
                         setHovered(false)
                     }
                 }}
+                */
+
                 geometry={geometry}
             >
                 <meshStandardMaterial
