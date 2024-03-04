@@ -15,17 +15,19 @@ import Shop from "./Shop";
 export default function Level(props) {
 
     // get props
-    const {position, index, name} = props;
+    const { position, index, name } = props;
 
     // get store values
     const {levels, mode, expandDistance, focusedLevel} = useMallStore();
-    const opacity = useMotionValue(1.0);
+    //const opacity = useMotionValue(1.0);
     const anim = mode;
 
     // declare private state
     const [hovered, setHovered] = useState(false)
-    const wall_matRef = useRef();
-    const rail_matRef = useRef();
+    const [visible, setVisible] = useState(true)
+    
+    //const wall_matRef = useRef();
+    //const rail_matRef = useRef();
 
     // load the level model
     const gltf = useLoader(GLTFLoader, "/model/"+ name + ".glb");
@@ -58,31 +60,17 @@ export default function Level(props) {
     });
 
     useEffect(() => {
-        let value = 1.0;
+    
         if (mode===2){
-            if ((focusedLevel - 1) === index) {
-                value = 1.0
-            } else {value = 0.0
-            }
+            setVisible((index + 1) === focusedLevel);
+        } else {
+            setVisible(true);
         }
-        animate(opacity, value , {
-            duration:0.6,
-        });
-    }, [mode, focusedLevel, index, opacity])
-
-    useFrame((state) => {
-        /*
-        if (wall_geometris.length > 0) {
-            wall_matRef.current.opacity = opacity.get();
-        }
-        */
-        if (rail_geometris.length > 0) {
-            rail_matRef.current.opacity = Math.min(opacity.get(), 0.5);
-        }
-    });
+    }, [mode, focusedLevel])
 
     return (
         <motion.group 
+            visible = {visible}
             position = {position}
             animate={"" + anim}
             variants={{
@@ -121,12 +109,11 @@ export default function Level(props) {
                 geometry={wall_geometris[0]}
             >
                 <meshStandardMaterial
-                    ref={wall_matRef}
+                    //ref={wall_matRef}
                     color='white' 
                     roughness={1.0} 
-                    envMapIntensity={0.25} 
-                    transparent
-                    opacity={1.0}
+                    envMapIntensity={0.25}
+                    side={THREE.FrontSide} 
                     flatShading
                 />
             </mesh>)
@@ -139,7 +126,7 @@ export default function Level(props) {
                 geometry={rail_geometris[0]}
             >
                 <meshStandardMaterial
-                    ref={rail_matRef}
+                    //ref={rail_matRef}
                     color='white' 
                     roughness={0.1} 
                     envMapIntensity={1} 
@@ -175,15 +162,3 @@ export default function Level(props) {
         </motion.group>
     )
 }
-
-
-/*
-computedHeights.map((height, index) => ( 
-    <Level 
-        key={index}
-        name = {levelNames[index]} 
-        index={index} 
-        position={[0, height, 0]} 
-    />
-))
-*/

@@ -7,7 +7,6 @@ export default function Shop(props) {
     )
 }
 
-
 /*
   <mesh 
     castShadow

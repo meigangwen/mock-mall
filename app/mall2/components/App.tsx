@@ -69,20 +69,20 @@ export default function App() {
                     <ambientLight intensity={0.15} />
                     <directionalLight
                         visible
-                        position={[15, 75, 15]}
-                        intensity={3.0}
+                        position={[20, 40, 20]}
+                        intensity={1.0}
                         castShadow={true}
-                        shadow-mapSize-width={1024}
-                        shadow-mapSize-height={1024}
+                        shadow-mapSize-width={2048}
+                        shadow-mapSize-height={2048}
                         shadow-camera-near={1}
-                        shadow-camera-far={100}
-                        shadow-camera-left={-200}
-                        shadow-camera-right={200}
-                        shadow-camera-top={200}
-                        shadow-camera-bottom={-200}
+                        shadow-camera-far={75}
+                        shadow-camera-left={-50}
+                        shadow-camera-right={50}
+                        shadow-camera-top={50}
+                        shadow-camera-bottom={-50}
                     />
                     
-                   
+                    <Environment preset="city" />
                     <CamControls />
                 </Canvas>
                 
