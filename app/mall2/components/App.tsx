@@ -26,9 +26,12 @@ import * as THREE from 'three';
 
 export default function App() {
     
+    //get the mall info
+    const { mode, levelNames, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
+    const { camStartPosition, positionArray, targetArray, setCamera } = useCamStore();
 
     //declare the UI parameters
-    const options = ["None","Basement 1", "Level 1", "Level 2", "Level 3", "Level 4"];
+    const options = ["None", ...levelNames];
     const { expanded, level } = useControls("Controls", {
         expanded: false,
         level: {
@@ -37,23 +40,20 @@ export default function App() {
         },
     });
 
-    const { mode, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
-    const { setCamPosition } = useCamStore();
-
     useEffect(()=>{
         if (expanded) {
             if (level === "None"){
                 setMode(1);
+                setCamera(positionArray[1], targetArray[1]);
             } else {
                 setMode(2);
-                // this is not reliable now
+                setCamera(positionArray[2], targetArray[2]);
                 const focusedLevel = options.indexOf(level);
                 setFocusedLevel(focusedLevel);
             }
-            setCamPosition(new THREE.Vector3(10,10,10));
         } else {
             setMode(0);
-            setCamPosition(new THREE.Vector3(0,0,0));
+            setCamera(positionArray[0], targetArray[0]);
         }
         updateComputedHeights();
     }, [expanded, level, setMode, updateComputedHeights, setFocusedLevel])
@@ -61,7 +61,7 @@ export default function App() {
     return (
         <>
             <MotionConfig transition={{...framerMotionConfig}}>
-                <Canvas shadows camera={{ position: [0, 10, 30], fov: 40 }}>
+                <Canvas shadows camera={{ position: camStartPosition, fov: 40 }}>
                     <color attach="background" args={["#000000"]} />
                     <Mall rotation-y={Math.PI / 4} />
 
@@ -89,5 +89,3 @@ export default function App() {
         </>
     )
 }
-
-//<Environment preset="city" />

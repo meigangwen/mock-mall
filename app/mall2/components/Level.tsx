@@ -128,4 +128,3 @@ export default function Level(props) {
         </motion.group>
     )
 }
-// <boxGeometry args={[10.0,1.0,10.0]} />
