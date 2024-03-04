@@ -10,6 +10,8 @@ import { Html } from "@react-three/drei";
 import useMallStore from '../state/mallStore';
 import * as THREE from 'three';
 
+import Shop from "./Shop";
+
 export default function Level(props) {
 
     // get props
@@ -22,21 +24,36 @@ export default function Level(props) {
 
     // declare private state
     const [hovered, setHovered] = useState(false)
-    const matRef = useRef();
+    const wall_matRef = useRef();
+    const rail_matRef = useRef();
 
     // load the level model
     const gltf = useLoader(GLTFLoader, "/model/"+ name + ".glb");
-    let geometry = new THREE.BufferGeometry();
+
+    // init geometry arrays here
+    // we can merge geometries that requires no interaction, for example walls, rails, stairs later
+    let wall_geometris = [];
+    let rail_geometris = [];
+    let shop_geometris = [];
+    let shop_positions = [];
+    //let geometry = new THREE.BufferGeometry();
 
     gltf.scene.traverse(function (child) {
         if (child.isMesh) {
-          //if there is not vertex normals, compute it
-          if (!child.geometry.attributes.normal) {
-            child.geometry.computeVertexNormals();
-          }
-    
-          geometry = child.geometry;
-          //material = child.material;
+            if (!child.geometry.attributes.normal) {
+                child.geometry.computeVertexNormals();
+            }
+
+            if (child.name.includes('wall')){
+                wall_geometris.push(child.geometry);
+            }
+            if (child.name.includes('rail')){
+                rail_geometris.push(child.geometry);
+            }
+            if (child.name.includes('shop')){
+                shop_geometris.push(child.geometry);
+                shop_positions.push(child.position);
+            }
         }
     });
 
@@ -54,7 +71,14 @@ export default function Level(props) {
     }, [mode, focusedLevel, index, opacity])
 
     useFrame((state) => {
-       matRef.current.opacity = opacity.get();
+        /*
+        if (wall_geometris.length > 0) {
+            wall_matRef.current.opacity = opacity.get();
+        }
+        */
+        if (rail_geometris.length > 0) {
+            rail_matRef.current.opacity = Math.min(opacity.get(), 0.5);
+        }
     });
 
     return (
@@ -88,32 +112,55 @@ export default function Level(props) {
                 },
             }}
         >
-            <mesh 
+
+            { // main level geometry is call wall, include floor and wall for now 
+            wall_geometris.length > 0 && 
+            (<mesh 
                 castShadow
-                //receiveShadow
-                onPointerOver={(e) => {
-                    if (mode === 1){ 
-                        setHovered(true)
-                    }
-                    e.stopPropagation()
-                }}
-                onPointerOut={() => {
-                    if (mode === 1){ 
-                        setHovered(false)
-                    }
-                }}
-                geometry={geometry}
+                receiveShadow
+                geometry={wall_geometris[0]}
             >
                 <meshStandardMaterial
-                    ref={matRef}
-                    color={hovered? 'red': 'white' } 
+                    ref={wall_matRef}
+                    color='white' 
                     roughness={1.0} 
                     envMapIntensity={0.25} 
                     transparent
                     opacity={1.0}
                     flatShading
                 />
-            </mesh>
+            </mesh>)
+            }
+
+            { // all rail geometries for the level 
+            rail_geometris.length > 0 && 
+            (<mesh 
+                castShadow
+                geometry={rail_geometris[0]}
+            >
+                <meshStandardMaterial
+                    ref={rail_matRef}
+                    color='white' 
+                    roughness={0.1} 
+                    envMapIntensity={1} 
+                    transparent
+                    opacity={0.5}
+                    flatShading
+                />
+            </mesh>)
+            }
+
+            { // all the shop geometries
+            shop_geometris.length > 0 && (
+                shop_geometris.map((geometry, index) => (
+                    <Shop
+                        key = {index}
+                        geometry = {geometry}
+                        position = {shop_positions[index]}
+                    />
+                ))
+            )
+            }
 
             {
             mode === 1 && (<Html 
@@ -128,3 +175,15 @@ export default function Level(props) {
         </motion.group>
     )
 }
+
+
+/*
+computedHeights.map((height, index) => ( 
+    <Level 
+        key={index}
+        name = {levelNames[index]} 
+        index={index} 
+        position={[0, height, 0]} 
+    />
+))
+*/

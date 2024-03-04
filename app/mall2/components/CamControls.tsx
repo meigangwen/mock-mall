@@ -9,7 +9,7 @@ import useCamStore from '../state/camStore';
 export default function CamControls() {
     
     const { camera } = useThree(); 
-    const { camPosition, lookAtPosition } = useCamStore();
+    const { camPosition, lookAtPosition, needsUpdate, setNeedsUpdate } = useCamStore();
 
     const orbitRef = useRef();
 
@@ -39,7 +39,9 @@ export default function CamControls() {
         )
         .easing(TWEEN.Easing.Cubic.Out)
         .start()
-    },[camPosition, lookAtPosition]);
+
+        setNeedsUpdate(false);
+    },[camPosition, lookAtPosition, needsUpdate]);
 
     // animate the camera
     useFrame((state) => {

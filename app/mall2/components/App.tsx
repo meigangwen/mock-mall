@@ -28,7 +28,7 @@ export default function App() {
     
     //get the mall info
     const { mode, levelNames, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
-    const { camStartPosition, positionArray, targetArray, setCamera } = useCamStore();
+    const { camStartPosition, positionArray, targetArray, setCamera, setNeedsUpdate } = useCamStore();
 
     //declare the UI parameters
     const options = ["None", ...levelNames];
@@ -47,9 +47,10 @@ export default function App() {
                 setCamera(positionArray[1], targetArray[1]);
             } else {
                 setMode(2);
-                setCamera(positionArray[2], targetArray[2]);
                 const focusedLevel = options.indexOf(level);
                 setFocusedLevel(focusedLevel);
+                setCamera(positionArray[2], targetArray[2]);
+                setNeedsUpdate(true);
             }
         } else {
             setMode(0);
@@ -61,27 +62,27 @@ export default function App() {
     return (
         <>
             <MotionConfig transition={{...framerMotionConfig}}>
-                <Canvas shadows camera={{ position: camStartPosition, fov: 40 }}>
+                <Canvas shadows camera={{ position: camStartPosition, fov: 45 }}>
                     <color attach="background" args={["#000000"]} />
                     <Mall rotation-y={Math.PI / 4} />
 
-                    <ambientLight intensity={0.1} />
+                    <ambientLight intensity={0.15} />
                     <directionalLight
                         visible
-                        position={[10, 50, 10]}
-                        intensity={0.5}
+                        position={[15, 75, 15]}
+                        intensity={3.0}
                         castShadow={true}
                         shadow-mapSize-width={1024}
                         shadow-mapSize-height={1024}
                         shadow-camera-near={1}
                         shadow-camera-far={100}
-                        shadow-camera-left={-100}
-                        shadow-camera-right={100}
-                        shadow-camera-top={100}
-                        shadow-camera-bottom={-100}
+                        shadow-camera-left={-200}
+                        shadow-camera-right={200}
+                        shadow-camera-top={200}
+                        shadow-camera-bottom={-200}
                     />
                     
-                    <Environment preset="city" />
+                   
                     <CamControls />
                 </Canvas>
                 
@@ -89,3 +90,5 @@ export default function App() {
         </>
     )
 }
+
+// <Environment preset="city" />
