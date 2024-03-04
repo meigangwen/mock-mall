@@ -73,7 +73,7 @@ export default function App() {
                         //rotation-y={Math.PI / 4} 
                     />
 
-                    <ambientLight intensity={0.15} />
+                    <ambientLight intensity={0.2} />
                     <directionalLight
                         visible
                         position={[20, 40, 20]}
@@ -89,7 +89,7 @@ export default function App() {
                         shadow-camera-bottom={-50}
                     />
                     
-                    <Environment preset="city" />
+                    <Environment preset="forest" />
                     <CamControls />
                 </Canvas>
             </MotionConfig>

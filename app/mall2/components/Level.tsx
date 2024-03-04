@@ -11,6 +11,7 @@ import useMallStore from '../state/mallStore';
 import * as THREE from 'three';
 
 import Shop from "./Shop";
+import { shopData } from '../data/shopData';
 
 export default function Level(props) {
 
@@ -18,8 +19,8 @@ export default function Level(props) {
     const { position, index, name } = props;
 
     // get store values
-    const {levels, mode, expandDistance, focusedLevel, setMode, setFocusedLevel} = useMallStore();
-    //const opacity = useMotionValue(1.0);
+    const {levels, mode, category, expandDistance, focusedLevel, setMode, setFocusedLevel} = useMallStore();
+    const shopsData = shopData[Math.max(focusedLevel-1, 0)];
     const anim = mode;
 
     // declare private state
@@ -134,7 +135,7 @@ export default function Level(props) {
                     //ref={wall_matRef}
                     color={hovered? 'red':'white'} 
                     roughness={1.0} 
-                    envMapIntensity={0.25}
+                    envMapIntensity={0.2}
                     side={THREE.FrontSide} 
                     flatShading
                 />
@@ -149,7 +150,7 @@ export default function Level(props) {
             >
                 <meshStandardMaterial
                     //ref={rail_matRef}
-                    color='white' 
+                    color='blue' 
                     roughness={0.1} 
                     envMapIntensity={1} 
                     transparent
@@ -160,7 +161,7 @@ export default function Level(props) {
             }
 
             { // all the shop geometries
-            shop_geometris.length > 0 && (
+            shop_geometris.length > 0 && shopsData.length > 0 && (
                 shop_geometris.map((geometry, index) => (
                     <Shop
                         key = {index}
@@ -168,6 +169,7 @@ export default function Level(props) {
                         geometry = {geometry}
                         position = {shop_positions[index]}
                         visible = {visible}
+                        shopCategory = {shopsData[index]['category']}
                     />
                 ))
             )

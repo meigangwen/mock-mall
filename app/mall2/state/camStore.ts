@@ -20,7 +20,7 @@ const useCamStore = create<camStore>((set) => ({
     camPosition: new THREE.Vector3(0,10,30),
     lookAtPosition: new THREE.Vector3(0,0,0),
 
-    positionArray: [new THREE.Vector3(0,10,18), new THREE.Vector3(0,15,28), new THREE.Vector3(0,7.5,25)],
+    positionArray: [new THREE.Vector3(-12,10,12), new THREE.Vector3(-18,15,18), new THREE.Vector3(-20,7.5,20)],
     targetArray: [new THREE.Vector3(0,2,0), new THREE.Vector3(0,6,0), new THREE.Vector3(0,1.0,0)],
 
     setCamera: (position, target) => set((state) => ({ camPosition: position, lookAtPosition: target })),

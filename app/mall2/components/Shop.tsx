@@ -4,11 +4,11 @@ import useCamStore from "../state/camStore";
 import * as THREE from "three";
 
 export default function Shop(props) {
-    const { geometry, index, position, visible } = props;
+    const { geometry, index, position, visible, shopCategory } = props;
     const textX = index >= 9 ? 8 : 12;
-    const { mode, focusedShop, setFocusedShop } = useMallStore();
+    const { mode, category, focusedShop ,setFocusedShop } = useMallStore();
     const { setCamera } = useCamStore();
-
+   
     return (
     <group>
         { (mode === 2) && visible &&
@@ -46,7 +46,7 @@ export default function Shop(props) {
             </svg>
         </Html>
         }
-        { (index === focusedShop) && visible && (
+        { (index === focusedShop || category === shopCategory) && visible && (
             <mesh 
                 geometry={geometry}
                 position = {position}
@@ -57,7 +57,6 @@ export default function Shop(props) {
                         envMapIntensity={0.25} 
                         transparent
                         opacity={0.5}
-                        //side={THREE.DoubleSide}
                         flatShading
                     />
             </mesh>
