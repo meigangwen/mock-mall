@@ -18,7 +18,7 @@ export default function Level(props) {
     const { position, index, name } = props;
 
     // get store values
-    const {levels, mode, expandDistance, focusedLevel} = useMallStore();
+    const {levels, mode, expandDistance, focusedLevel, setMode, setFocusedLevel} = useMallStore();
     //const opacity = useMotionValue(1.0);
     const anim = mode;
 
@@ -107,10 +107,30 @@ export default function Level(props) {
                 castShadow
                 receiveShadow
                 geometry={wall_geometris[0]}
+                onPointerOver={(e) => {
+                    if (mode === 1){ 
+                        setHovered(true)
+                    }
+                    e.stopPropagation()
+                }}
+                onPointerOut={() => {
+                    if (mode === 1){ 
+                        setHovered(false)
+                    }
+                }}
+
+                /*
+                onPointerUp={(e) => {
+                    //setCamera(new THREE.Vector3(0.0,6.0,0.0), new THREE.Vector3(position.x *2 , 1.0 ,position.z * 2));
+                    setMode(2);
+                    setFocusedLevel(index+1);
+                    setHovered(false);
+                }}
+                */
             >
                 <meshStandardMaterial
                     //ref={wall_matRef}
-                    color='white' 
+                    color={hovered? 'red':'white'} 
                     roughness={1.0} 
                     envMapIntensity={0.25}
                     side={THREE.FrontSide} 

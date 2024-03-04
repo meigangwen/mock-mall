@@ -14,6 +14,7 @@ import { framerMotionConfig } from "../motionConfig";
 import Mall from "./Mall";
 import Background from "./Background";
 import CamControls from './CamControls';
+import Directory from './Directory';
 
 // import state
 import useMallStore from '../state/mallStore';
@@ -22,7 +23,7 @@ import useCamStore from '../state/camStore';
 export default function App() {
     
     //get the mall info
-    const { levelNames, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
+    const { mode, levelNames, focusedLevel, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
     const { camStartPosition, positionArray, targetArray, setCamera, setNeedsUpdate } = useCamStore();
 
     //declare the UI parameters
@@ -52,7 +53,7 @@ export default function App() {
             setCamera(positionArray[0], targetArray[0]);
         }
         updateComputedHeights();
-    }, [expanded, level, setMode, updateComputedHeights, setFocusedLevel])
+    }, [expanded, level, focusedLevel])
 
     return (
         <>
@@ -82,8 +83,10 @@ export default function App() {
                     <Environment preset="city" />
                     <CamControls />
                 </Canvas>
-                
             </MotionConfig>
+            { mode===2 && 
+                <Directory />
+            }
         </>
     )
 }
