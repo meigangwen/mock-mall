@@ -2,12 +2,10 @@
 
 // import modules
 import { Canvas } from '@react-three/fiber'
-import { Sky, Environment} from "@react-three/drei";
-import { useEffect, useState } from 'react'
-//import { useFrame, useThree } from "@react-three/fiber";
+import { Environment} from "@react-three/drei";
+import { useEffect } from 'react'
 import { useControls } from "leva";
 import { MotionConfig } from "framer-motion";
-//import { animate, useMotionValue } from "framer-motion";
 
 // import config
 import { framerMotionConfig } from "../motionConfig";
@@ -17,17 +15,14 @@ import Mall from "./Mall";
 import Background from "./Background";
 import CamControls from './CamControls';
 
-
 // import state
 import useMallStore from '../state/mallStore';
 import useCamStore from '../state/camStore';
 
-import * as THREE from 'three';
-
 export default function App() {
     
     //get the mall info
-    const { mode, levelNames, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
+    const { levelNames, setMode, setFocusedLevel ,updateComputedHeights} = useMallStore();
     const { camStartPosition, positionArray, targetArray, setCamera, setNeedsUpdate } = useCamStore();
 
     //declare the UI parameters
@@ -64,7 +59,9 @@ export default function App() {
             <MotionConfig transition={{...framerMotionConfig}}>
                 <Canvas shadows camera={{ position: camStartPosition, fov: 45 }}>
                     <color attach="background" args={["#000000"]} />
-                    <Mall rotation-y={Math.PI / 4} />
+                    <Mall 
+                        //rotation-y={Math.PI / 4} 
+                    />
 
                     <ambientLight intensity={0.15} />
                     <directionalLight
@@ -90,5 +87,3 @@ export default function App() {
         </>
     )
 }
-
-// <Environment preset="city" />

@@ -142,8 +142,10 @@ export default function Level(props) {
                 shop_geometris.map((geometry, index) => (
                     <Shop
                         key = {index}
+                        index = {index}
                         geometry = {geometry}
                         position = {shop_positions[index]}
+                        visible = {visible}
                     />
                 ))
             )
